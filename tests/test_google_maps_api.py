@@ -23,3 +23,10 @@ class TestCreatePlace:
         assert msg.get('msg') == 'Address successfully updated'
         new_address_check = GoogleMapsAPI.check_new_location_was_created(place_id=created_place).json()
         assert new_address_check.get('address') == '100 Lenina street, RU', 'Address not updated'
+
+    def test_deleting_of_new_place(self, created_place):
+        print('Метод Delete')
+        result_delete = GoogleMapsAPI.delete_new_location(place_id=created_place)
+        msg = result_delete.json()
+        assert result_delete.status_code == 200
+        assert msg.get('status') == 'OK'
