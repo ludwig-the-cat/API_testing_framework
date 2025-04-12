@@ -36,7 +36,7 @@ class GoogleMapsAPI:
         print(result_post.text)
         return result_post
 
-    # Метод проверки новой локации
+    # Метод проверки существования новой локации
     @staticmethod
     def check_new_location_was_created(place_id):
         get_resource = '/maps/api/place/get/json'
@@ -45,3 +45,20 @@ class GoogleMapsAPI:
         result_get = HttpMethods.get(get_url)
         print(result_get.text)
         return result_get
+
+    # Метод обновления локации
+    @staticmethod
+    def update_location(place_id):
+
+        json_for_update = {
+            "place_id": place_id,
+            "address": "100 Lenina street, RU",
+            "key": "qaclick123"
+        }
+
+        put_resource = '/maps/api/place/update/json'
+        put_url = BASE_URL + put_resource + KEY + '&place_id=' + place_id
+        print(put_url)
+        result_put = HttpMethods.put(put_url, json_for_update)
+        print(result_put.text)
+        return result_put

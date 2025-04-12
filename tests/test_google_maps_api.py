@@ -14,3 +14,12 @@ class TestCreatePlace:
         print('Метод GET')
         result_get: Response = GoogleMapsAPI.check_new_location_was_created(place_id=created_place)
         assert result_get.status_code == 200
+
+    def test_update_created_location(self, created_place):
+        print('Метод PUT')
+        result_put = GoogleMapsAPI.update_location(place_id=created_place)
+        assert result_put.status_code == 200
+        msg = result_put.json()
+        assert msg.get('msg') == 'Address successfully updated'
+        new_address_check = GoogleMapsAPI.check_new_location_was_created(place_id=created_place).json()
+        assert new_address_check.get('address') == '100 Lenina street, RU', 'Address not updated'
